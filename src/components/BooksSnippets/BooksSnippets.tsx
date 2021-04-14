@@ -1,18 +1,44 @@
-import React from "react";
+import React, {useRef} from "react";
 import BookSnippet from "./BookSnippet/BookSnippet";
-import {useAppSelector} from "../../utils/hooks";
-import {book} from "../../reducers/booksReducer";
+import {useAppDispatch, useAppSelector} from "../../utils/hooks";
+import {addBooksThunk, book, setCurrentPage} from "../../reducers/booksReducer";
+import styles from "./BooksSnippets.module.scss"
+import Preloader from "../common/Preloader/Preloader";
 
 const BooksSnippets = () => {
     const books = useAppSelector(state => state.booksReducer.books)
+    const totalBooksCount = useAppSelector(state => state.booksReducer.totalBooksCount)
+    const query = useAppSelector(state => state.booksReducer.query)
+    const currentPage = useAppSelector(state => state.booksReducer.currentPage)
+    const booksPerLoad = useAppSelector(state => state.booksReducer.booksPerLoad)
+    const isBooksLoading = useAppSelector(state => state.booksReducer.isBooksLoading)
+
+    const dispatch = useAppDispatch()
+
+    const scrollRef = useRef<HTMLDivElement>(null)
+
+    const addBooksOnScroll = () => {
+        if ((!isBooksLoading) && (query) &&
+            (scrollRef.current!.scrollHeight - scrollRef.current!.clientHeight - 1 <= scrollRef.current!.scrollTop)) {
+            dispatch(addBooksThunk(query, currentPage + 1, booksPerLoad))
+            dispatch(setCurrentPage(currentPage + 1))
+        }
+    }
 
     return <div>
-        {books.map((book: book) => (
-            <BookSnippet title={book.title}
+        {totalBooksCount ? `total results: ${totalBooksCount}` : null}
+        страница:{currentPage}
+        {query}
+        <div className={styles.BooksSnippets__container} onScroll={addBooksOnScroll} ref={scrollRef}>
+            {books.map((book: book, index: number) => (
+            <BookSnippet key={index}
+                         title={book.title}
                          author_name={book.author_name}
                          first_publish_year={book.first_publish_year}
                          cover_edition_key={book.cover_edition_key}
             />))}
+            {isBooksLoading ? <Preloader/> : ""}
+        </div>
     </div>
 }
 

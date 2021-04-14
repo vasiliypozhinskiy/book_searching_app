@@ -1,0 +1,17 @@
+.BookSnippet {
+  width: 95%;
+  margin: 5px auto;
+  border: black solid 2px;
+  border-radius: 5px;
+  display: flex;
+
+  .BookSnippet__image {
+    margin: 5px;
+    width: auto;
+    height: 58px;
+  }
+
+  .BookSnippet__info {
+    width: 100%;
+  }
+}
