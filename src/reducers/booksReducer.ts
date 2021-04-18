@@ -9,13 +9,16 @@ const SET_QUERY = "SET_QUERY";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const ADD_BOOKS = "ADD_BOOKS"
 const SET_IS_BOOKS_LOADING = "SET_IS_BOOKS_LOADING";
+const SET_IS_BOOK_INFO_OPEN = "SET_IS_BOOK_INFO_OPEN";
+const SET_OPEN_BOOK_INFO_INDEX = "SET_OPEN_BOOK_INFO_INDEX";
 
 export type book = {
     title: string,
     author_name: string,
     first_publish_year: number,
     ISBN: number,
-    cover_edition_key: string
+    cover_edition_key: string,
+    first_sentence: string
 }
 
 type initialStateType = {
@@ -24,7 +27,9 @@ type initialStateType = {
     currentPage: number,
     totalBooksCount: number | null,
     booksPerLoad: number,
-    isBooksLoading: boolean
+    isBooksLoading: boolean,
+    isBookInfoOpen: boolean,
+    openBookInfoIndex: number | null
 }
 
 const initialState: initialStateType = {
@@ -33,7 +38,9 @@ const initialState: initialStateType = {
     query: null,
     currentPage: 1,
     booksPerLoad: 10,
-    isBooksLoading: false
+    isBooksLoading: false,
+    isBookInfoOpen: false,
+    openBookInfoIndex: null
 }
 
 const booksReducer = (state = initialState, action: any) => {
@@ -44,7 +51,8 @@ const booksReducer = (state = initialState, action: any) => {
                 author_name: book.author_name,
                 first_publish_year: book.first_publish_year,
                 ISBN: book.isbn,
-                cover_edition_key: book.cover_edition_key
+                cover_edition_key: book.cover_edition_key,
+                first_sentence: book.first_sentence
             }))
             return {...state, books: [...booksForSetting]}
         case ADD_BOOKS:
@@ -53,9 +61,14 @@ const booksReducer = (state = initialState, action: any) => {
                 author_name: book.author_name,
                 first_publish_year: book.first_publish_year,
                 ISBN: book.isbn,
-                cover_edition_key: book.cover_edition_key
+                cover_edition_key: book.cover_edition_key,
+                first_sentence: book.first_sentence
             }))
             return {...state, books: [...state.books, ...booksForAdding]}
+        case SET_IS_BOOK_INFO_OPEN:
+            return {...state, isBookInfoOpen: action.isBookInfoOpen}
+        case SET_OPEN_BOOK_INFO_INDEX:
+            return {...state, openBookInfoIndex: action.index}
         case SET_IS_BOOKS_LOADING:
             return {...state, isBooksLoading: action.isBooksLoading}
         case SET_TOTAL_BOOKS_COUNT:
@@ -83,6 +96,17 @@ export const setIsBooksLoading = (isBooksLoading : boolean) => ({
     type: SET_IS_BOOKS_LOADING,
     isBooksLoading
 })
+
+export const setIsBookInfoOpen = (isBookInfoOpen: boolean) => ({
+    type: SET_IS_BOOK_INFO_OPEN,
+    isBookInfoOpen
+})
+
+export const setOpenBookInfoIndex = (index: number) => ({
+    type: SET_OPEN_BOOK_INFO_INDEX,
+    index
+})
+
 
 export const setTotalBooksCount = (totalBooksCount : number) => ({
     type: SET_TOTAL_BOOKS_COUNT,

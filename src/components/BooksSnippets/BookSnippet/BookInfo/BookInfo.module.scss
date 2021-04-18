@@ -1,0 +1,20 @@
+.BookInfo__container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ff8d01;
+  padding: 15px;
+
+  .BookInfo__image {
+    width: auto;
+    height: 500px;
+  }
+
+  .BookInfo__ISBN {
+
+  }
+  .BookInfo__date {
+    text-align: end;
+  }
+}
