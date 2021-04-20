@@ -32,16 +32,19 @@ const BooksSnippets = () => {
 
 
     return <div>
-        {query && (totalBooksCount ? `total results: ${totalBooksCount}` : "No results")}
+        {query && <div
+            className={styles.status}>{isBooksLoading ?
+            "Поиск..." :
+            totalBooksCount ? `Всего найдено книг: ${totalBooksCount}` : "Ничего не найдено"}</div>}
         <div className={styles.BooksSnippets__container} onScroll={addBooksOnScroll} ref={scrollRef}>
             {books.map((book: book, index: number) => (
-            <BookSnippet key={index}
-                         index={index}
-                         title={book.title}
-                         author_name={book.author_name}
-                         first_publish_year={book.first_publish_year}
-                         cover_edition_key={book.cover_edition_key}
-            />))}
+                <BookSnippet key={index}
+                             index={index}
+                             title={book.title}
+                             author_name={book.author_name}
+                             first_publish_year={book.first_publish_year}
+                             cover_edition_key={book.cover_edition_key}
+                />))}
             {isBooksLoading ? <Preloader/> : ""}
         </div>
     </div>

@@ -16,9 +16,9 @@ export type book = {
     title: string,
     author_name: string,
     first_publish_year: number,
-    ISBN: number,
+    ISBN: Array<number>,
     cover_edition_key: string,
-    first_sentence: string
+    publisher: Array<string>
 }
 
 type initialStateType = {
@@ -37,7 +37,7 @@ const initialState: initialStateType = {
     totalBooksCount: null,
     query: null,
     currentPage: 1,
-    booksPerLoad: 10,
+    booksPerLoad: 20,
     isBooksLoading: false,
     isBookInfoOpen: false,
     openBookInfoIndex: null
@@ -52,7 +52,7 @@ const booksReducer = (state = initialState, action: any) => {
                 first_publish_year: book.first_publish_year,
                 ISBN: book.isbn,
                 cover_edition_key: book.cover_edition_key,
-                first_sentence: book.first_sentence
+                publisher: book.publisher
             }))
             return {...state, books: [...booksForSetting]}
         case ADD_BOOKS:
@@ -62,7 +62,7 @@ const booksReducer = (state = initialState, action: any) => {
                 first_publish_year: book.first_publish_year,
                 ISBN: book.isbn,
                 cover_edition_key: book.cover_edition_key,
-                first_sentence: book.first_sentence,
+                publisher: book.publisher
             }))
             return {...state, books: [...state.books, ...booksForAdding]}
         case SET_IS_BOOK_INFO_OPEN:

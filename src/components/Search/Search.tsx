@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {getBooksThunk, setCurrentPage, setQuery} from "../../reducers/booksReducer";
 import {useAppDispatch, useAppSelector} from "../../utils/hooks";
+import styles from "./Search.module.scss"
 
 const Search = () => {
     const dispatch = useAppDispatch()
@@ -31,10 +32,10 @@ const Search = () => {
         setSearchInputTimer(timerId)
     }
 
-    return <div>
+    return <div className={styles.Search__container}>
         <span>Поиск книг:</span>
-        <input onChange={searchBooksOnChange} value={searchInput}/>
-        <button onClick={() => searchBooks(searchInput)}>Искать</button>
+        <input className={styles.Search__input} onChange={searchBooksOnChange} value={searchInput}/>
+        <button className={styles.Search__button} onClick={() => searchBooks(searchInput)}>Искать</button>
     </div>
 };
 

@@ -3,6 +3,8 @@ import Search from "./components/Search/Search";
 import BooksSnippets from "./components/BooksSnippets/BooksSnippets";
 import {useAppDispatch} from "./utils/hooks";
 import {setIsBookInfoOpen} from "./reducers/booksReducer";
+import Background from "./components/common/Background/Background";
+import styles from "./App.module.scss"
 
 function App() {
     const dispatch = useAppDispatch()
@@ -11,9 +13,12 @@ function App() {
     }
 
     return (
-        <div className="App" onClick={toggleIsBookInfoOpenHandler}>
-            <Search/>
-            <BooksSnippets/>
+        <div onClick={toggleIsBookInfoOpenHandler}>
+            <Background/>
+            <main className={styles.main__container}>
+                <Search/>
+                <BooksSnippets/>
+            </main>
         </div>
     );
 }

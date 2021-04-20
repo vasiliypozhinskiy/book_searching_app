@@ -23,9 +23,9 @@ const BookInfo = (props: BookInfoProps) => {
         }</div>
         <div className={styles.BookInfo__info}>
             <h2>{book.title}</h2>
-            {book.author_name ? "by " + book.author_name : "Sorry, we don't know author of this book"}
-            <div>{book.first_sentence ? book.first_sentence + ".." : null}</div>
+            <div>{book.author_name ? "Автор: " + book.author_name : "Данных о авторе нет в базе"}</div>
             <div className={styles.BookInfo__ISBN}>{book.ISBN ? "ISBN №: " + book.ISBN[0] : null}</div>
+            <div>{book.publisher ? "Издатель: " + book.publisher[0] : "Издатель неизвестен"}</div>
             <div className={styles.BookInfo__date}>{book.first_publish_year}</div>
         </div>
     </div>

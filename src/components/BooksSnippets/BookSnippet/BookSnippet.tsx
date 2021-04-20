@@ -41,7 +41,7 @@ const BookSnippet = (props: BookSnippetProps) => {
         }</div>
         <div className={styles.BookSnippet__info}>
             <h2>{props.title}</h2>
-            {props.author_name ? "by " + props.author_name : "Sorry, we don't know author of this book"}
+            <div>{props.author_name ? "by " + props.author_name : "Sorry, we don't know author of this book"}</div>
         </div>
         {(isBookInfoOpen && props.index === openBookInfoIndex) ? <BookInfo index={props.index}/> : null}
     </div>

@@ -1,0 +1,27 @@
+@import "../../styles/variables.scss";
+
+.Search__container {
+  font-size: $largeFontSize;
+  position: relative;
+  width: 80%;
+  color: white;
+  margin: 20px auto 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .Search__input {
+    font-size: $largeFontSize;
+    width: 50%;
+    border-radius: 5px;
+    padding: 3px;
+    border: grey 2px outset;
+  }
+
+  .Search__button {
+    font-size: $largeFontSize;
+    padding: 3px;
+    border-radius: 5px;
+    border: grey 2px inset;
+  }
+}

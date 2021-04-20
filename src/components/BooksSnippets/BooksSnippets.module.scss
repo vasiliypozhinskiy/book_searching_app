@@ -1,4 +1,17 @@
+@import "../../styles/variables.scss";
+
+.status {
+  margin: 5px auto;
+  padding: 5px;
+  border-radius: 5px;
+  width: fit-content;
+  background-color: $backgroundColor;
+}
+
 .BooksSnippets__container {
-  max-height: 90vh;
+  max-height: 80vh;
   overflow-y: scroll;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
