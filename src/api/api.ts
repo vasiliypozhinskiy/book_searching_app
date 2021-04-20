@@ -3,7 +3,7 @@ import axios from "axios";
 const openLibraryApi = axios.create({baseURL: "https://openlibrary.org/"})
 
 export const booksAPI = {
-    getBooks(query: string, page = 1, limit=10) {
+    getBooks(query : string, page : number, limit : number) {
         return openLibraryApi.get("search.json", {
             params: {
                 q: query,

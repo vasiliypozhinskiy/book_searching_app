@@ -46,7 +46,7 @@ const initialState: initialStateType = {
 const booksReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case SET_BOOKS:
-            const booksForSetting = action.books.map((book: any) => ({
+            const booksForSetting = action.books.map((book: any) : book => ({
                 title: book.title,
                 author_name: book.author_name,
                 first_publish_year: book.first_publish_year,
@@ -56,13 +56,13 @@ const booksReducer = (state = initialState, action: any) => {
             }))
             return {...state, books: [...booksForSetting]}
         case ADD_BOOKS:
-            const booksForAdding = action.books.map((book: any) => ({
+            const booksForAdding = action.books.map((book: any) : book => ({
                 title: book.title,
                 author_name: book.author_name,
                 first_publish_year: book.first_publish_year,
                 ISBN: book.isbn,
                 cover_edition_key: book.cover_edition_key,
-                first_sentence: book.first_sentence
+                first_sentence: book.first_sentence,
             }))
             return {...state, books: [...state.books, ...booksForAdding]}
         case SET_IS_BOOK_INFO_OPEN:
@@ -123,7 +123,7 @@ export const setCurrentPage = (currentPage: number) => ({
     currentPage
 })
 
-export const getBooksThunk = (query: string, page: number | undefined, limit: number | undefined):
+export const getBooksThunk = (query: string, page: number, limit: number):
     AppThunk => {
     return async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
         dispatch(setIsBooksLoading(true))
@@ -134,13 +134,16 @@ export const getBooksThunk = (query: string, page: number | undefined, limit: nu
     }
 }
 
-export const addBooksThunk = (query: string, page: number | undefined, limit: number | undefined):
+export const addBooksThunk = (query: string, page: number, limit: number):
     AppThunk => {
-    return async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
-        dispatch(setIsBooksLoading(true))
-        const data = await booksAPI.getBooks(query, page, limit)
-        dispatch(setIsBooksLoading(false))
-        dispatch(addBooks(data.docs))
+    return async (dispatch: ThunkDispatch<{}, {}, AnyAction>, getState) => {
+        const state = getState()
+        if (state.booksReducer.totalBooksCount > (page - 1) * limit) {
+            dispatch(setIsBooksLoading(true))
+            const data = await booksAPI.getBooks(query, page, limit)
+            dispatch(setIsBooksLoading(false))
+            dispatch(addBooks(data.docs))
+        }
     }
 }
 

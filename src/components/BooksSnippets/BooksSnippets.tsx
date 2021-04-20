@@ -32,7 +32,7 @@ const BooksSnippets = () => {
 
 
     return <div>
-        {totalBooksCount ? `total results: ${totalBooksCount}` : null}
+        {query && (totalBooksCount ? `total results: ${totalBooksCount}` : "No results")}
         <div className={styles.BooksSnippets__container} onScroll={addBooksOnScroll} ref={scrollRef}>
             {books.map((book: book, index: number) => (
             <BookSnippet key={index}
